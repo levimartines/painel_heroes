@@ -2,6 +2,7 @@ package com.levimartines.heroes_painel.controllers;
 
 import com.levimartines.heroes_painel.models.Hero;
 import com.levimartines.heroes_painel.services.HeroService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,12 @@ import java.util.List;
 public class HeroController {
     @Autowired
     private HeroService heroService;
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Hero> findById(@PathVariable Long id) {
+        Hero hero = heroService.findById(id).orElseThrow();
+        return ResponseEntity.ok().body(hero);
+    }
 
     @GetMapping
     public ResponseEntity<List<Hero>> findAll() {

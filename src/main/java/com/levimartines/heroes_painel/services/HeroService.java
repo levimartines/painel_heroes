@@ -5,8 +5,8 @@ import com.levimartines.heroes_painel.repositories.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HeroService {
@@ -16,6 +16,10 @@ public class HeroService {
     public Hero save (Hero hero) {
         hero = heroRepository.save(hero);
         return hero;
+    }
+
+    public Optional<Hero> findById(Long id){
+        return heroRepository.findById(id);
     }
 
     public List<Hero> findAll() {
