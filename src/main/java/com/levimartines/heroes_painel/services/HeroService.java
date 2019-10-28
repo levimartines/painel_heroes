@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class HeroService {
@@ -18,11 +17,21 @@ public class HeroService {
         return hero;
     }
 
-    public Optional<Hero> findById(Long id){
-        return heroRepository.findById(id);
+    public Hero findById(Long id){
+        return heroRepository.findById(id).orElseThrow();
     }
 
     public List<Hero> findAll() {
         return (List<Hero>) heroRepository.findAll();
+    }
+
+    public Hero update(Hero newHero) {
+        Hero hero = this.findById(newHero.getId());
+        hero.setName(newHero.getName());
+        return heroRepository.save(hero);
+    }
+
+    public void delete(Long id){
+        heroRepository.deleteById(id);
     }
 }
